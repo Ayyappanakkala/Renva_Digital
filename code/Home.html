@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Renva | Digital Training</title>
+<link rel="stylesheet" href="output.css" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+  .masterClass{
+    width: 100%;
+    height: 85vh;
+    background-image: url('./icons/digital-art-young-students.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+  }
+  .getIn{
+      width: 100%;
+      height: 70vh;
+      background-image: url('./icons/5124556.jpg');
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center;
+    }
+    .getInTouch{
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 70vh;
+      background: rgba(0,0,0, 0.6);
+      box-shadow: inset 10px   #000000;
+   }
+   .popup-form {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      padding: 20px;
+      border-radius: 10px;
+      z-index: 999;
+    }
+    .menu-btn{
+    cursor: pointer;
+    position: absolute;
+    top: 38px;
+    right: 30px;
+    display: none;
+}
+@media (max-width: 768px) {
+  .menu {
+    display: none;
+  }
+
+  .menu-btn {
+    display: block;
+    top: 25px; /* Show hamburger menu on smaller screens */
+  }
+  .getIn{
+    height: 60vh;
+  }
+  .getInTouch{
+    height: 60vh;
+  }
+}
+  .menu.active {
+    display: flex; 
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    background-color: #EBF4FE;
+    top: 100px;
+    left: 0;
+    width: 100%;
+    padding: 20px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+  }
+@media (max-width: 360px) {
+  .menu.active{
+    top: 80px;
+  }
+  .masterClass{
+    height: 70vh;
+  }
+  .menu-btn{
+    right: 20px;
+  }
+}
+</style>
+</head>
+<body> 
+<nav class="w-full h-20 sm:h-28 bg-slate-50 sticky top-0 z-100">
+  <div class="menu-btn">
+    <i class="fas fa-bars fa-2x text-blue-900 w-10 h-10"></i>
+  </div>
+  <div class="sm:ml-10">
+    <div class="grid grid-cols-3 items-center justify-center">
+      <div>
+        <a href="./Home.html">
+          <img class="w-48 h-20 sm:w-44 sm:h-28 p-4" src="./icons/RDN_Logo_Png.png" alt="RDT Logo" />
+        </a>
+      </div>
+      <div class="menu flex justify-center gap-8">
+        <a class=" tracking-wide text-2xl font-semibold text-blue-900 hover:text-blue-500 hover:border-b-2 border-solid border-blue-500 transition-colors duration-300" href="./Home.html">Home</a>
+        <a class="tracking-wide text-2xl font-semibold text-blue-900 hover:text-blue-500 hover:border-b-2 border-solid border-blue-500 transition-colors duration-300" href="./About.html">About</a>
+        <a class="tracking-wide text-2xl font-semibold text-blue-900 hover:text-blue-500 hover:border-b-2 border-solid border-blue-500 transition-colors duration-300" href="./Course.html">Courses</a>
+        <a class="tracking-wide text-2xl font-semibold text-blue-900 hover:text-blue-500 hover:border-b-2 border-solid border-blue-500 transition-colors duration-300" href="./Blog.html">Blog</a>
+        <a class="tracking-wide text-2xl font-semibold text-blue-900 hover:text-blue-500 hover:border-b-2 border-solid border-blue-500 transition-colors duration-300" href="./Contact.html">Contact</a>
+      </div>
+
+      <div class=" sm:ml-48 lg:ml-10 ml-10">
+        <button id="openFormBtn" class=" tracking-wide bg-blue-900 w-28 h-10 sm:w-36 sm:h-14 text-xl font-semibold text-white rounded-lg hover:bg-gradient-to-r from-blue-900 to-gray-400">
+          Start Now
+        </button>
+      </div>
+    </div>
+  </div>
+</nav>
+<div id="popupForm" class="popup-form">
+  <div class="form-container w-[90vw] sm:w-auto lg:w-[20vw] h-auto bg-white rounded-md">
+    <div class="w-full h-12 bg-gradient-to-r from-blue-900 to-gray-500 rounded-md flex items-center justify-between px-8">
+      <h2 class="text-center text-xl text-blue-50  font-bold py-2 tracking-widest">Start Now</h2>
+      <button id="close"><i class="fa-solid fa-xmark text-2xl text-blue-50  font-bold"></i></button>
+    </div>
+    <form onsubmit="SendEmail(); return false" class="p-8" action="">
+      <div>
+        <Label class="outline-none text-lg text-blue-800 font-semibold" for="name">Full Name</Label>
+        <br>
+        <input id="name" class="outline-none text-lg text-blue-800 px-4 w-[100%] h-8 bg-blue-200 rounded-xl" type="text" placeholder="Enter Your Full Name">
+      </div>
+      <div>
+        <Label class="outline-none text-lg text-blue-800 font-semibold" for="mobile">Mobile No.</Label>
+        <br>
+        <input id="mobile" class="outline-none text-lg text-blue-800 px-4 w-[100%] h-8 bg-blue-200 rounded-xl" type="tel" placeholder="Enter Your Mobile Number">
+      </div>
+      <div>
+        <Label class="outline-none text-lg text-blue-800 font-semibold" for="mail">Mail</Label>
+        <br>
+        <input id="mail" class="outline-none text-lg text-blue-800 px-4 w-[100%] h-8 bg-blue-200 rounded-xl" type="email" placeholder="Ex: abc@gmail.com">
+      </div>
+      <div class="py-4">
+        <button
+        type="submit"
+        class=" w-[100%]  h-12 cursor-pointer hover:border-b-2 border-solid bg-gradient-to-r from-blue-700 to-gray-400 hover:from-[#010A16] hover:to-[#535E6B]  border-blue-900 text-2xl text-blue-50 font-bold rounded-xl"
+      >
+        Send
+      </button>
+      </div>
+    </form>
+  </div>
+</div>
+<!--Banner Section-->
+<div class="entry-page">
+  <section class="w-full max-[412px]:h-[40vh] max-[360px]:h-[55vh] sm:h-[70vh] lg:h-[80vh] bg-blue-100">
+    <div class="">
+      <h3 class="sm:text-5xl font-semibold text-2xl sm:pl-20 px-5 py-2 sm:pt-10 lg:pt-20 pb-4">Welcome to</h3>
+      <h1 class="text-5xl sm:text-8xl font-bold text-stone-600 px-5 sm:pl-20"><span class="sm:text-8xl text-5xl font-bold text-blue-800">Renva</span> Digital</h1>
+      <h4 class="text-5xl sm:text-8xl font-bold text-stone-600 sm:pl-20 px-5">Training..!</h4>
+      <p class="text-lg sm:text-2xl font-semibold pt-4 px-5 sm:pl-20">Crafting Tomorrow's Marketing Leaders Today</p>
+    </div>
+    <div class="m-5 sm:m-20 mt-6">
+      <a href="./Course.html">
+          <button id="courseButton" class="w-[70vw] sm:w-[50vw] lg:w-[30vw] h-14 sm:h-20 bg-gradient-to-r from-blue-700 to-gray-400 text-xl sm:text-3xl text-white tracking-wide rounded-md transition-all duration-300  font-semibold hover:from-[#010A16] hover:to-[#535E6B] ">
+          View Course
+          <i id="courseIcon" class="fa-solid fa-arrow-right text-2xl pl-3 opacity-0 transition-opacity duration-300"></i>
+        </button>
+        ++
+      </a>
+    </div>
+  <div class="absolute hidden lg:block top-20 right-24">
+    <img src="./icons/Shape_blue.png" />
+  </div>
+  <div class="absolute hidden lg:block top-20 right-20">
+    <img src="./icons/Shape_img.png" />
+  </div>
+  </section>
+  <!--Why Renva ?-->
+  <section class="my-6">
+    <h2 class="text-center text-xl sm:text-3xl text-blue-900 font-semibold">Why Choose <span class="text-4xl sm:text-6xl font-bold text-blue-800">Renva </span>?</h2>
+    <p class="text-justify sm:text-center p-2 sm:py-4 text-blue-900">At Renva, we're committed to providing an exceptional learning experience that sets us apart. Here are five compelling reasons to choose Renva for your digital marketing education.</p>
+    <div class="flex lg:flex-row flex-col items-center justify-center my-auto mx-8 lg:mx-60 sm:gap-5 gap-2">
+      <div class="p-10">
+        <img class="w-56 h-56 sm:h-96 lg:w-[40vw] lg:h-[40vh] shadow-2xl shadow-slate-900" src="./icons/Classroom.jpg" />
+      </div>
+     <div>
+       <h3 class="text-2xl sm:text-4xl sm:py-6 font-bold text-blue-900 py-2  lg:text-left text-center">Stunning Classroom</h3>
+       <p class="text-justify text-blue-900 py-4">Immerse yourself in state of the art classrooms designed to inspire creativity and enhance the learning environment. Our modern facilities create the perfect backdrop for your educational journey.</p>
+     </div>
+    </div>
+    <div class="w-full h-auto bg-blue-900">
+      <div class="flex lg:flex-row flex-col items-center justify-center my-auto mx-8 lg:mx-60 gap-5">
+        <div>
+          <h3 class="text-2xl sm:text-4xl sm:py-6 font-bold text-blue-50 py-2 text-center lg:text-left">Good Lads, Great Mentors</h3>
+          <p class="text-justify text-blue-50">Join a community of motivated learners guided by experienced and supportive mentors. Our team of seasoned professionals ensures you receive valuable insights and industry perspectives throughout your course..</p>
+        </div>
+        <div class="p-10">
+          <img class="w-56 h-56 sm:h-96 lg:w-[40vw] lg:h-[40vh] shadow-lg shadow-slate-300" src="./icons/labs.jpg" />
+        </div>
+      </div>
+    </div>
+    <div class="flex lg:flex-row flex-col  items-center justify-center my-auto mx-8 lg:mx-60 gap-5">
+      <div class="p-10">
+        <img class="w-56 h-56 sm:h-96 lg:w-[40vw] lg:h-[40vh] shadow-2xl shadow-slate-900" src="./icons/JobAssitant.jpg" />
+      </div>
+      <div>
+        <h3 class="lg:text-left text-center text-2xl sm:text-4xl sm:py-6 font-bold text-blue-900 py-2">Carrier Assistant</h3>
+        <p class="text-justify text-blue-900 py-5">Our commitment goes beyond the classroom. Benefit from career assistance services that help you navigate the job market, refine your resume, and prepare for interviews. Your success is our success.</p>
+      </div>
+    </div>
+    <div class="w-full h-auto bg-blue-900">
+      <div class="flex lg:flex-row flex-col items-center justify-center my-auto mx-8 lg:mx-60 gap-5">
+        <div>
+          <h3 class="text-2xl sm:text-4xl sm:py-6 font-bold text-blue-50 py-2 text-center lg:text-left">Dynamic Internship Opportunities</h3>
+          <p class="text-justify text-blue-50">Gain practical experience through dynamic internship opportunities that bridge the gap between theory and real-world application. Elevate your skills and build a portfolio that stands out in the competitive digital marketing landscape.</p>
+        </div>
+        <div class="p-10">
+          <img class="w-56 h-56 sm:h-96 lg:w-[40vw] lg:h-[40vh] shadow-lg shadow-slate-300" src="./icons/Internship.jpg" />
+        </div>
+    </div>
+  </div>
+  <div class="flex lg:flex-row flex-col items-center justify-center my-auto mx-8 lg:mx-60 gap-5">
+    <div class="p-10">
+      <img class="w-56 h-56 sm:h-96 lg:w-[40vw] lg:h-[40vh] shadow-2xl shadow-slate-900" src="./icons/24support.jpg" />
+    </div>
+    <div>
+      <h3 class="text-2xl sm:text-4xl sm:py-6 font-bold text-blue-900 py-2 text-center lg:text-left">24/7 Support</h3>
+      <p class="text-justify text-blue-900 py-5">Learning doesn't stop when the clock does. Enjoy access to around-the-clock support, ensuring you can get assistance whenever you need it. Your success is our priority, no matter the time.</p>
+    </div>
+  </div>
+</section>
+<section class="w-full h-screen bg-blue-200 masterClass">
+  <div class="masterClasses py-60">
+    <h2 class="text-center text-4xl sm:text-6xl lg:text-9xl font-bold text-blue-800 pb-4">Master Class Series</h2>
+  </div>
+</section>
+<section class="my-8">
+  <p class=" text-center text-xl font-medium text-blue-900 p-5 sm:p-10">Engage in our Master Class Series for a deep dive into digital marketing excellence.</p>
+  <div class="flex flex-col items-center justify-center gap-3">
+      <div id="section1" class="border-2 border-solid border-blue-800 rounded-md py-4 px-8 w-[95vw] sm:w-[80vw] lg:w-[40vw]  h-auto hover:bg-gradient-to-r from-blue-100 to-gray-200">
+          <h3 class="text-lg sm:text-2xl text-blue-900 cursor-pointer flex items-center justify-between" onclick="toggleList('section1')">
+            <span class="flex items-center">1. Introduction to Digital Marketing</span>
+            <i class="fa-solid fa-chevron-down px-4 text-2xl text-blue-900" id="toggleIcon1"></i>
+          </h3>
+          <ul class="list-disc pl-4 sm:pl-20 lg:pl-10 pt-3 text-blue-900" id="listItems1" style="display: none;">
+            <li>Understanding the Digital Landscape</li>
+            <li>Evolution of Marketing in the Digital Age</li>
+            <li>Importance of Digital Marketing in Business</li>
+          </ul>      
+      </div>
+  <div id="section2" class="border-2 border-solid border-blue-800 rounded-md py-4 w-[95vw] sm:w-[80vw] lg:w-[40vw] px-8 h-auto hover:bg-gradient-to-r from-blue-100 to-gray-200">
+      <h3 class="text-lg sm:text-2xl lg:text-2xl text-blue-900 cursor-pointer flex items-center justify-between" onclick="toggleList('section2')">
+        2. Website Design Basics Through WordPress
+        <i class="fa-solid fa-chevron-down px-4 text-2xl text-blue-900" id="toggleIcon2"></i>
+      </h3>
+      <ul class="list-disc pl-4 sm:pl-20 lg:pl-10 pt-3 text-blue-900" id="listItems2" style="display: none;">
+        <li>Introduction to WordPress and Website Creation</li>
+        <li>Understanding Website Layout and Navigation</li>
+        <li>Customizing Themes and Plugins for Your Website</li>
+      </ul>      
+    </div>
+    <div id="section3" class="border-2 border-solid border-blue-800 rounded-md py-4 w-[95vw] sm:w-[80vw] lg:w-[40vw] px-8 h-auto hover:bg-gradient-to-r from-blue-100 to-gray-200">
+      <h3 class="text-lg sm:text-2xl text-blue-900 cursor-pointer flex items-center justify-between" onclick="toggleList('section3')">
+        3. SEO (Search Engine Optimization)
+        <i class="fa-solid fa-chevron-down px-4 text-2xl text-blue-900" id="toggleIcon3"></i>
+      </h3>
+      <ul class="list-disc pl-4 sm:pl-20 lg:pl-10 pt-3 text-blue-900" id="listItems3" style="display: none;">
+        <li>Understanding Search Engines and Algorithms</li>
+        <li>On-Page and Off-Page Optimization Techniquesg</li>
+        <li>SEO Tools and Analytics for Performance Tracking</li>
+      </ul>      
+    </div>
+    <div id="section4" class="border-2 border-solid border-blue-800 rounded-md py-4 w-[95vw] sm:w-[80vw] lg:w-[40vw] px-8 h-auto hover:bg-gradient-to-r from-blue-100 to-gray-200">
+      <h3 class="text-lg sm:text-2xll text-blue-900 cursor-pointer flex items-center justify-between" onclick="toggleList('section4')">
+        4. SMM (Social Media Marketing)
+        <i class="fa-solid fa-chevron-down px-4 text-2xl text-blue-900" id="toggleIcon4"></i>
+      </h3>
+      <ul class="list-disc pt-3 pl-4 sm:pl-20 lg:pl-10 text-blue-900" id="listItems4" style="display: none;">
+        <li>Social Media Platforms Overview and Audience Demographics</li>
+        <li>Crafting Social Media Content and Engagement Strategieg</li>
+        <li>Analyzing Social Media Metrics for Campaign Optimization</li>
+      </ul>      
+    </div>
+    <div id="section5" class="border-2 border-solid border-blue-800 rounded-md py-4 w-[95vw] sm:w-[80vw] lg:w-[40vw] px-8 h-auto hover:bg-gradient-to-r from-blue-100 to-gray-200">
+      <h3 class="text-lg sm:text-2xl text-blue-900 cursor-pointer flex items-center justify-between" onclick="toggleList('section5')">
+        5. E-Commerce Management
+        <i class="fa-solid fa-chevron-down px-4 text-2xl text-blue-900" id="toggleIcon5"></i>
+      </h3>
+      <ul class="list-disc pl-4 sm:pl-20 lg:pl-10 pt-3 text-blue-900" id="listItems5" style="display: none;">
+        <li>Introduction to E-Commerce Platforms and Technologiess</li>
+        <li>Setting Up and Managing an Online Storeg</li>
+        <li>E-Commerce Marketing Strategies for Sales Growth</li>
+      </ul>      
+    </div>
+  </div>    
+  </section>
+  <!--Our Services-->
+  <!--<section class="my-6">
+    <h2 class="text-center text-6xl font-bold text-blue-800 pb-4">Our Services</h2>
+    <div class="w-full h-[50vh] bg-blue-900 flex items-center justify-center gap-8">
+      <div class="w-60 h-60 bg-white rounded-full grid content-center justify-center">
+        <img class="w-56 h-56" src="./icons/Facebook.png" />
+      </div>
+      <div class="w-60 h-60 bg-white rounded-full grid content-center justify-center">
+        <img class="w-56 h-56 rounded-full" src="./icons/instagram-logo-icone4.png" />
+      </div>
+      <div class="w-60 h-60 bg-white rounded-full grid content-center justify-center">
+        <img class="w-56 h-56 rounded-full" src="./icons/Google__G__logo.svg.png" />
+      </div>
+      <div class="w-60 h-60 bg-white rounded-full grid content-center justify-center">
+        <img class="w-56 h-56 rounded-full" src="./icons/youtube.png" />
+      </div>
+    </div>
+  </section>-->
+  <section class="my-6 mx-auto w-auto lg:w-1/2 h-auto sm:h-[70vh] bg-blue-100 rounded-2xl">
+    <h2 class="text-center text-4xl text-blue-900 font-semibold py-4">Course Plans</h2>
+   <div class="flex sm:flex-row flex-col items-center justify-center gap-10">
+      <div class="w-80 h-96 border-4 border-solid border-blue-800 rounded-3xl shadow-xl shadow-blue-950">
+        <div class="p-6 grid grid-rows-2  content-center justify-start gap-3">
+          <h3 class="text-3xl font-bold text-blue-900">Basic</h3>
+          <p class="text-xl font-bold text-blue-900 pb-4"><i class="fa-regular fa-clock text-2xl pr-4"></i>45 Days</p>
+          <p class="text-xl font-bold text-blue-900 pb-4"><i class="fa-regular fa-file text-2xl pr-4"></i>6+ Projects</p>
+          <p class="text-xl font-bold text-blue-900 pb-4"><i class="fa-solid fa-screwdriver-wrench text-xl pr-4"></i>8+ Tools days</p>
+        </div>
+        <div  class="px-3">
+          <a href="./icons/DM Content.pdf" target="_blank"><button id="courseButton1" class="pl-4 w-72 h-12 bg-gradient-to-r from-blue-700 to-gray-400 text-xl text-white tracking-wide rounded-full transition-all duration-300  font-semibold hover:from-[#010A16] hover:to-[#535E6B] hover:text-lg">Download Curriculum <i id="courseIcon1" class="fa-solid fa-arrow-down text-white opacity-0 transition-opacity duration-30"></i>
+          </button></a>
+        </div>
+        <div class="p-3">
+          <button id="openScheduleDemoBtn" class="pl-4 w-72 h-12 border-4 border-solid border-blue-900 text-blue-900 text-xl font-bold rounded-full hover:border-blue-700 ">Schedule for Demo </button>
+        </div> 
+      </div>
+      <div class="w-80 h-96 border-4 border-solid border-blue-800 rounded-3xl shadow-xl shadow-blue-950">
+        <div class="p-6 grid grid-rows-2 gap-3">
+          <h3 class="text-3xl font-bold text-blue-900">Advance</h3>
+          <p class="text-xl font-bold text-blue-900 pb-4"><i class="fa-regular fa-clock text-xl pr-4"></i>90 Days</p>
+          <p class="text-xl font-bold text-blue-900 pb-4"><i class="fa-regular fa-file text-xl pr-4"></i>12+ Projects</p>
+          <p class="text-xl font-bold text-blue-900 pb-4"><i class="fa-solid fa-screwdriver-wrench text-xl pr-4"></i>12+ Tools days</p>
+      </div>
+      <div  class="px-3">
+        <a href="./icons/DM Content.pdf" target="_blank"><button id="courseButton2" class="pl-4 w-72 h-12 bg-gradient-to-r from-blue-700 to-gray-400 text-xl text-white tracking-wide rounded-full transition-all duration-300  font-semibold hover:from-[#010A16] hover:to-[#535E6B] hover:text-lg">Download Curriculum <i id="courseIcon2" class="fa-solid fa-arrow-down text-white opacity-0 transition-opacity duration-30"></i>
+        </button></a>
+      </div>
+      <div  class="p-3">
+        <button id="openScheduleDemoBtn2" class="pl-4 w-72 h-12 border-4 border-solid border-blue-900 text-blue-900 text-xl font-bold rounded-full hover:border-blue-700 ">Schedule for Demo </button>
+      </div> 
+    </div>
+  </section>
+  <section class="py-8">
+<h2 class="text-center text-3xl sm:text-5xl font-bold text-blue-800 pb-8">
+  Tools & Platforms
+</h2>
+<div class="px-4 lg:px-60 grid grid-cols-4 sm:grid-cols-6 content-center justify-center gap-10">
+  <img class="sm:w-20 sm:h-20 w-16 h-16" src="./icons/Facebook.png"/>
+  <img class="sm:w-20 sm:h-20 w-16 h-16" src="./icons/instagram-ads-service.jpg"/>
+  <img class="sm:w-30 sm:h-20 w-20 h-16" src="./icons/tlogo10.png"/>
+  <img class="sm:w-20 sm:h-20 w-16 h-16" src="./icons/Google__G__logo.svg.png"/>
+  <img class="sm:w-20 sm:h-20 w-16 h-16" src="./icons/Google-Ads-Logo-Transparent.png"/>
+  <img class="sm:w-20 sm:h-20 w-16 h-16" src="./icons/youtube.png"/>
+  <img class="sm:w-30 sm:h-20 w-20 h-16" src="./icons/tlogo8.png"/>
+  <img class="sm:w-40 sm:h-20 w-36 h-28" src="./icons/tlogo5.png"/>
+  <img class="sm:w-40 sm:h-20 w-28 h-14" src="./icons/Canva.png"/>
+  
+  <img class="w-20 h-20" src="./icons/chatgpt.png"/>
+</div>
+  </section>
+  <section class=" mx-auto py-8 w-auto lg:w-[80vw] h-auto bg-blue-900">
+<h2 class="text-center text-3xl sm:text-5xl font-bold text-blue-50 pb-8">Frequently Asked Questions</h2>
+<div class="flex flex-col items-center justify-center gap-3">
+  <div id="section6" class="w-[95vw] sm:w-[80vw] lg:w-[40vw] py-4 px-4 border-4 border-solid border-blue-200 rounded-3xl hover:bg-gradient-to-r from-blue-300 to-gray-300 hover:text-blue-900 text-blue-100 hover:border-blue-600">
+    <h3 class="text-xl text-blue-100 cursor-pointer flex items-center justify-between hover:text-blue-900" onclick="toggleList('section6')">
+      Why Digital Marketing in Renva ?
+      <i class="fa-solid fa-chevron-down px-4 text-2xl text-blue-100 hover:text-blue-900" onclick="changeColor('section6')"></i>
+    </h3>
+    <p class="list-disc pl-4 sm:pl-8 pt-3 text-blue-900" id="listItems6" style="display: none;">
+      In Renva Digital, we teach you the <br> exact methods to acquire clients for companies, <br>alongside real-time project experiences.
+    </p>      
+  </div>
+  <div id="section7" class="w-[95vw] sm:w-[80vw]  lg:w-[40vw] py-4 px-4 border-4 border-solid border-blue-200 rounded-3xl hover:bg-gradient-to-r from-blue-300 to-gray-300 hover:text-blue-900 hover:border-blue-600">
+    <h3 class="text-xl text-blue-100 cursor-pointer flex items-center justify-between hover:text-blue-900" onclick="toggleList('section7')">
+      What kind of training examples are provided by Renva Digital?
+      <i class="fa-solid fa-chevron-down px-4 text-2xl text-blue-100 hover:text-blue-900" onclick="changeColor('section7')"></i>
+    </h3>
+    <ul class="list-disc pl-4 sm:pl-8 pt-3 text-blue-900" id="listItems7" style="display: none;">
+      <p>Renva Digital provides practical training examples across various digital disciplines, including but not limited to:</p>
+      <li>Creating effective social media marketing campaigns</li>
+      <li>Designing compelling graphics for digital content</li>
+      <li>Developing websites using popular frameworks and languages</li>
+      <li>Implementing SEO strategies to enhance online visibility</li>
+      <li>Crafting engaging email marketing campaigns</li>
+    </ul>      
+  </div>
+  <div id="section8" class="w-[95vw] sm:w-[80vw]  lg:w-[40vw] py-4 px-4 border-4 border-solid border-blue-200 rounded-3xl hover:bg-gradient-to-r from-blue-300 to-gray-300 hover:text-blue-900 hover:border-blue-600">
+    <h3 class="text-xl text-blue-100 cursor-pointer flex items-center justify-between hover:text-blue-900" onclick="toggleList('section8')">
+      Are the training examples suitable for beginners?
+      <i class="fa-solid fa-chevron-down px-4 text-2xl text-blue-100 hover:text-blue-900" onclick="changeColor('section8')"></i>
+    </h3>
+    <p class="list-disc pl-4 sm:pl-8 text-balance  pt-3 text-blue-900" id="listItems8" style="display: none;">
+      Yes, Renva Digital offers training examples tailored to different skill levels, including beginners. The examples typically start with fundamental concepts and gradually progress to more advanced techniques, allowing learners to build their skills progressively.
+    </p>      
+  </div>
+  <div id="section9" class="w-[95vw] sm:w-[80vw]  lg:w-[40vw] py-4 px-4 border-4 border-solid border-blue-200 rounded-3xl hover:bg-gradient-to-r from-blue-300 to-gray-300 hover:text-blue-900 hover:border-blue-600">
+    <h3 class="text-xl text-blue-100 cursor-pointer flex items-center justify-between hover:text-blue-900" onclick="toggleList('section9')">
+      Do I need prior experience to benefit from the training examples?
+      <i class="fa-solid fa-chevron-down px-4 text-2xl text-blue-100 hover:text-blue-900" onclick="changeColor('section9')"></i>
+    </h3>
+    <p class="list-disc pl-4 sm:pl-8 pt-3 text-blue-900" id="listItems9" style="display: none;">
+      While prior experience in digital marketing or web development can be helpful,<br>
+       it's not always necessary. Renva Digital provides step-by-step guidance and explanations,<br>
+        making the training examples accessible to individuals with varying levels of experience.
+    </p>      
+  </div>
+</div>
+  </section>
+  <section>
+  <div class="getIn">
+    <div class="getInTouch">
+        <h2 class="text-center text-4xl sm:text-6xl lg:text-8xl text-blue-50 font-bold py-10 sm:py-16">Talk To Us</h2>
+        <p class="text-center text-3xl p-2 sm:p-0 sm:text-4xl lg:text-6xl text-blue-50 font-bold pb-14">Have any queriers Please get in touch </p>
+        <div class="mx-[20%] sm:mx-[30%] lg:mx-[35%]">
+          <a href="./Contact.html"><button id="courseButton" class="w-[60vw] sm:w-[40vw] lg:w-[30vw] sm:h-20 h-16 bg-gradient-to-r from-blue-700 to-gray-400 text-2xl sm:text-3xl text-white tracking-wide rounded-md transition-all duration-300  font-semibold hover:from-[#022044] hover:to-[#535E6B]">GET IN TOUCH</button></a>
+      </div>
+    </div>
+  </div>
+  </section>
+  <footer class="w-ful h-auto bg-blue-950">
+  <div class="grid grid-rows-1  sm:grid-cols-5 p-4 gap-4">
+    <div class="flex flex-col gap-3 lg:gap-6 ">
+      <a href="./Home.html"><img class="w-44 h-24lg:w-56 lg:h-32 bg-white" src="./icons/RDN_Logo_Png.png"/></a>
+      <p class="text-white text-base lg:text-lg">Renva Digital is your platform to explore, learn, and innovate. Join us, and let's design the  future, today!</p>
+    </div>
+    <div>
+      <h3 class="text-xl lg:text-2xl text-white font-bold pb-3 tracking-wider">Company</h3>
+      <a class="text-base lg:text-xl text-white hover:text-blue-400 hover:border-b-2 border-solid border-blue-400 tracking-wider" href="./About.html"> About</a>
+      <br>
+      <a class="text-base lg:text-xl text-white hover:text-blue-400 hover:border-b-2 border-solid border-blue-400 tracking-wider" href="./Course.html"> Courses</a>
+      <br>
+      <a class="text-base lg:text-xl text-white hover:text-blue-400 hover:border-b-2 border-solid border-blue-400 tracking-wider" href="./Blog.html"> Blogs</a>
+      <br>
+      <a class="text-base lg:text-xl text-white hover:text-blue-400 hover:border-b-2 border-solid border-blue-400 tracking-wider" href="./Contact.html"> Contact</a>
+    </div>
+    <div>
+      <h3 class="text-xl lg:text-2xl text-white font-bold pb-3 tracking-wider">Follow Us</h3>
+      <diV class="flex gap-5">
+        <a href="#"><i class="fa-brands fa-facebook text-lg lg:text-2xl text-white hover:text-blue-400"></i></a>
+        <a href="#"><i class="fa-brands fa-instagram text-lg lg:text-2xl text-white hover:text-blue-400"></i></a>
+        <a href="#"><i class="fa-brands fa-whatsapp text-lg lg:text-2xl text-white hover:text-blue-400"></i></a>
+        <a href="#"><i class="fa-brands fa-youtube text-lg lg:text-2xl text-white hover:text-blue-400"></i></a>
+        
+      </diV>
+    </div>
+    <div>
+      <h3 class="text-lg lg:text-2xl text-white font-bold pb-3 tracking-wider">Website</h3>
+      <a href="https://www.renvadigital.in" target='_blank' class="text-lg lg:text-xl font-bold text-white hover:text-blue-400 hover:border-b-2 border-solid border-blue-400">renvadigital.in</a>
+      </diV>
+      <div>
+        <h3 class="text-2xl text-white font-bold pb-3 tracking-wider">Address</h3>
+        <p class="text-base lg:text-xl font-semiboldbold text-white ">#514, Annapurna Block, 5th Floor, Near Aditya Enclave Ameerpet, Hyderabad  500016. </p>
+        </diV>
+    </div>
+    <h2 class="text-center text-base sm:text-xl text-white">&copy; Copyright Renva Digital | 2024 | Privacy Policy</h2>
+  </div>
+  </footer>
+</div>
+</body>
+<script src="https://smtpjs.com/v3/smtp.js"></script>
+<script>
+  document.querySelector('.menu-btn').addEventListener('click', function() {
+  document.querySelector('.menu').classList.toggle('active');
+});
+  const button = document.getElementById('courseButton');
+        const icon = document.getElementById('courseIcon');
+
+        button.addEventListener('mouseover', () => {
+          icon.style.opacity = '1';
+        });
+
+        button.addEventListener('mouseout', () => {
+          icon.style.opacity = '0';
+        });
+        const buttons = document.querySelectorAll('button[id^="courseButton"]');
+  buttons.forEach(button => {
+    button.addEventListener('mouseover', () => {
+      const iconId = button.id.replace('courseButton', 'courseIcon');
+      const icon = document.getElementById(iconId);
+      if (icon) {
+        icon.style.opacity = '1';
+      }
+    });
+    button.addEventListener('mouseout', () => {
+      const iconId = button.id.replace('courseButton', 'courseIcon');
+      const icon = document.getElementById(iconId);
+      if (icon) {
+      icon.style.opacity = '0';
+      }
+    });
+
+  });
+  function toggleList(sectionId) {
+  var list = document.getElementById("listItems" + sectionId.slice(-1));
+  var icon = document.getElementById("toggleIcon" + sectionId.slice(-1));
+  var allLists = document.querySelectorAll("[id^='listItems']");
+  allLists.forEach(function(item) {
+    if (item.id !== "listItems" + sectionId.slice(-1)) {
+      item.style.display = "none";
+      var listNumber = item.id.replace("listItems", "");
+      var otherIcon = document.getElementById("toggleIcon" + listNumber);
+      if (otherIcon) {
+        otherIcon.classList.remove("rotate");
+      }
+    }
+  });
+  if (list.style.display === "none") {
+    list.style.display = "block";
+    icon.classList.add("rotate");
+  } else {
+    list.style.display = "none";
+    icon.classList.remove("rotate");
+  }
+}
+
+function changeColor(sectionId) {
+  var heading = document.querySelector("#" + sectionId.slice(-1) + " h3");
+  heading.classList.add("text-blue-900");
+}
+function openForm() {
+        var popupForm = document.getElementById('popupForm');
+        var entryPage = document.querySelector('.entry-page');
+        popupForm.style.display = 'block';
+        entryPage.classList.add('blur');
+    }
+
+    function closeForm() {
+        var popupForm = document.getElementById('popupForm');
+        setTimeout(function () {
+            popupForm.style.display = 'none';
+            var entryPage = document.querySelector('.entry-page');
+            entryPage.classList.remove('blur');
+        }, 1000); // Delay of 1000 milliseconds (1 second)
+    }
+
+    document.getElementById('openFormBtn').addEventListener('click', function () {
+        openForm();
+    });
+
+    document.getElementById('openScheduleDemoBtn').addEventListener('click', function () {
+        openForm();
+            openForm();
+    });
+
+    document.getElementById('openScheduleDemoBtn2').addEventListener('click', function () {
+        openForm();
+          openForm(); // Delay of 3000 milliseconds (3 seconds) before closing the form
+    });
+
+    document.querySelector('#popupForm form').addEventListener('submit', function (event) {
+        event.preventDefault();
+        closeForm();
+    });
+
+    document.querySelector('#close').addEventListener('click', function () {
+        closeForm();
+    });
+
+
+  function SendEmail(){
+      const name = document.getElementById('name');
+      const emailInput = document.getElementById('mail');
+      const phoneInput = document.getElementById('mobile');
+
+      let ebody = `Name: ${name.value}<br>Mobile: ${mobile.value}<br>Mail: ${mail.value}`;
+
+      Email.send({
+    SecureToken : "578b8747-c412-43f2-b072-484bc447a5af",
+    To : 'ayyappaakkala7@gmail.com',
+    From : 'ayyappaakkala7@gmail.com',
+    Subject : "Enquiry For Digital Marketing Training",
+    Body : ebody
+}).then(
+  message => alert(message)
+);
+    }
+</script>
+</html>
